@@ -7,23 +7,23 @@ import Foundation
 import PackagePlugin
 
 @main struct ActionBuilderPlugin: CommandPlugin {
-    func createBuildCommands(context: PackagePlugin.PluginContext, target: PackagePlugin.Target) async throws -> [PackagePlugin.Command] {
-        let output = context.pluginWorkDirectory.appending("GeneratedSources").appending("Version.generated.swift")
-        let infoOutput = context.pluginWorkDirectory.appending("GeneratedSources").appending("Info.plist")
-        let root = context.package.directory
+    func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
+        let url = URL(fileURLWithPath: context.package.directory.string)
+        let tool = try context.tool(named: "ActionBuilderTool")
         
-        // TODO: make this a prebuild command when they work with local (non-binary) tool targets
-        // as a temporary workaround, remove the generated file to (hopefully?) force this to run every build
-        let url = URL(fileURLWithPath: output.string)
-        try? FileManager.default.removeItem(at: url)
+        print("Running \(tool) for \(url)")
+
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: tool.path.string)
+        process.arguments = [url.path]
         
-        return [
-            .buildCommand(
-                displayName: "Calculating Version",
-                executable: try context.tool(named: "VersionatorTool").path,
-                arguments: [root, output, infoOutput],
-                outputFiles: [output, infoOutput]
-            )
-        ]
+        let outputPipe = Pipe()
+        process.standardOutput = outputPipe
+        try process.run()
+        process.waitUntilExit()
+        
+        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+        let output = String(decoding: outputData, as: UTF8.self)
+        print(output)
     }
 }

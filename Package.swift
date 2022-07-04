@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.6
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 //  Created by Sam Deane on 04/07/2022.
@@ -23,6 +23,7 @@ let package = Package(
     ],
     
     dependencies: [
+        .package(url: "https://github.com/elegantchaos/ActionBuilderCore", branch: "main")
     ],
     
     targets: [
@@ -31,16 +32,17 @@ let package = Package(
             
             capability: .command(
                 intent: .custom(
-                    verb: "command",
-                    description: "command description"
+                    verb: "generate-workflow",
+                    description: "Generates a Github Actions workflow file for the package."
                 ),
                 
                 permissions: [
-                    .writeToPackageDirectory(reason: "write reason")
+                    .writeToPackageDirectory(reason: "Writes Workflow.yml file.")
                 ]
             ),
             
             dependencies: [
+                .product(name: "ActionBuilderTool", package: "ActionBuilderCore")
             ]
         ),
     ]
