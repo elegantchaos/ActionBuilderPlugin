@@ -11,30 +11,22 @@ jobs:
 
     macOS-swift56:
         name: macOS (Swift 5.6)
-        env:
-            TOOLCHAINS: swift
         runs-on: macos-11
         steps:
         - name: Checkout
           uses: actions/checkout@v1
         - name: Make Logs Directory
           run: mkdir logs
-        - name: Install Toolchain
-          run: |
-            wget --quiet https://download.swift.org/swift-5.6.2-release/xcode/swift-5.6.2-RELEASE/swift-5.6.2-RELEASE-osx.pkg
-            sudo installer -pkg swift-5.6.2-RELEASE-osx.pkg -target /
-            ln -s "/Library/Developer/Toolchains/swift-5.6.2-RELEASE.xctoolchain/usr/bin" swift-latest
-            ls -d /Applications/Xcode*
-            sudo xcode-select -s /Applications/Xcode_13.3.app
-            swift --version
         - name: Xcode Version
           run: |
+            ls -d /Applications/Xcode*
+            sudo xcode-select -s /Applications/Xcode_13.2.1.app
             xcodebuild -version
-            xcrun swift --version
+            swift --version
         - name: Swift Version
           run: swift --version
         - name: Build (release)
-          run: export PATH="swift-latest:$PATH"; swift build -c release
+          run: swift build -c release
         - name: Upload Logs
           uses: actions/upload-artifact@v1
           if: always()
@@ -45,30 +37,22 @@ jobs:
 
     macOS-swift57:
         name: macOS (Swift 5.7)
-        env:
-            TOOLCHAINS: swift
         runs-on: macos-12
         steps:
         - name: Checkout
           uses: actions/checkout@v1
         - name: Make Logs Directory
           run: mkdir logs
-        - name: Install Toolchain
-          run: |
-            wget --quiet https://download.swift.org/swift-5.7-branch/xcode/swift-5.7-branch/swift-5.7-branch-osx.pkg
-            sudo installer -pkg swift-5.7-branch-osx.pkg -target /
-            ln -s "/Library/Developer/Toolchains/swift-5.7-branch.xctoolchain/usr/bin" swift-latest
-            ls -d /Applications/Xcode*
-            sudo xcode-select -s /Applications/Xcode_13.3.app
-            swift --version
         - name: Xcode Version
           run: |
+            ls -d /Applications/Xcode*
+            sudo xcode-select -s /Applications/Xcode_13.4.app
             xcodebuild -version
-            xcrun swift --version
+            swift --version
         - name: Swift Version
           run: swift --version
         - name: Build (release)
-          run: export PATH="swift-latest:$PATH"; swift build -c release
+          run: swift build -c release
         - name: Upload Logs
           uses: actions/upload-artifact@v1
           if: always()
