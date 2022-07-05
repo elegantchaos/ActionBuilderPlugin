@@ -20,7 +20,7 @@ Add this repo to your package dependencies:
 
 Invoke the tool from the command line:
 
-`swift package plugin --allow-writing-to-package-directory --verbose generate-workflow`
+`swift package plugin --allow-writing-to-package-directory generate-workflow`
 
 
 
