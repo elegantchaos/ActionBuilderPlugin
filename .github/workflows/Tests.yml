@@ -33,6 +33,8 @@ jobs:
             xcrun swift --version
         - name: Swift Version
           run: swift --version
+        - name: Test (release)
+          run: export PATH="swift-latest:$PATH"; swift test --configuration release -Xswiftc -enable-testing --enable-test-discovery
         - name: Upload Logs
           uses: actions/upload-artifact@v1
           if: always()
