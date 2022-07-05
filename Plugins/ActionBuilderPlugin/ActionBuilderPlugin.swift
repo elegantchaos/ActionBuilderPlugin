@@ -7,17 +7,15 @@ import Foundation
 import PackagePlugin
 
 @main struct ActionBuilderPlugin: CommandPlugin {
-    func run(tool: String, arguments: [String], context: PackagePlugin.PluginContext) throws -> String {
+    func run(tool: String, arguments: [String], context: PackagePlugin.PluginContext, cwd: URL) throws -> String {
         let tool = try context.tool(named: tool)
         
-        #if DEBUG
-        print("Running \(tool) \(arguments.joined(separator: " "))")
-        #endif
+        Diagnostics.remark("Running \(tool) \(arguments.joined(separator: " ")).")
         
         let process = Process()
         process.executableURL = URL(fileURLWithPath: tool.path.string)
         process.arguments = arguments
-        process.currentDirectoryURL = URL(fileURLWithPath: context.package.directory.string)
+        process.currentDirectoryURL = cwd
         
         let outputPipe = Pipe()
         process.standardOutput = outputPipe
@@ -29,8 +27,18 @@ import PackagePlugin
     }
     
     func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
-        let url = URL(fileURLWithPath: context.package.directory.string)
-        let output = try run(tool: "ActionBuilderTool", arguments: [url.path], context: context)
-        print(output)
+        let packageDirectoryURL = URL(fileURLWithPath: context.package.directory.string)
+
+        // create workflows directory if necessary
+        let fm = FileManager.default
+        let workflowsURL = packageDirectoryURL.appendingPathComponent(".github/workflows")
+        if !fm.fileExists(atPath: workflowsURL.path) {
+            Diagnostics.remark("Creating workflows directory.")
+            try fm.createDirectory(at: workflowsURL, withIntermediateDirectories: true)
+        }
+        
+        // run the ActionBuilder command line tool
+        let output = try run(tool: "ActionBuilderTool", arguments: [packageDirectoryURL.path], context: context, cwd: packageDirectoryURL)
+        Diagnostics.remark(output)
     }
 }
