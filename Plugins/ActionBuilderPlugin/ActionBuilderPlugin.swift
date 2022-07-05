@@ -7,23 +7,30 @@ import Foundation
 import PackagePlugin
 
 @main struct ActionBuilderPlugin: CommandPlugin {
-    func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
-        let url = URL(fileURLWithPath: context.package.directory.string)
-        let tool = try context.tool(named: "ActionBuilderTool")
+    func run(tool: String, arguments: [String], context: PackagePlugin.PluginContext) throws -> String {
+        let tool = try context.tool(named: tool)
         
-        print("Running \(tool) for \(url)")
-
+        #if DEBUG
+        print("Running \(tool) \(arguments.joined(separator: " "))")
+        #endif
+        
         let process = Process()
         process.executableURL = URL(fileURLWithPath: tool.path.string)
-        process.arguments = [url.path]
+        process.arguments = arguments
+        process.currentDirectoryURL = URL(fileURLWithPath: context.package.directory.string)
         
         let outputPipe = Pipe()
         process.standardOutput = outputPipe
         try process.run()
         process.waitUntilExit()
         
-        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(decoding: outputData, as: UTF8.self)
+        let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
+        return String(decoding: data, as: UTF8.self)
+    }
+    
+    func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
+        let url = URL(fileURLWithPath: context.package.directory.string)
+        let output = try run(tool: "ActionBuilderTool", arguments: [url.path], context: context)
         print(output)
     }
 }
