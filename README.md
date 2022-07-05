@@ -6,3 +6,21 @@ By default the workflow file will be generated at `.github/workflows/Tests.yml`,
 can be configured.
 
 See [ActionBuilderCore](https://github.com/elegantchaos/ActionBuilderCore) for full details on what the workflow contains and how to alter it.
+
+## Usage
+
+Add this repo to your package dependencies:
+
+```Swift
+    dependencies: [
+        .package(url: "https://github.com/elegantchaos/ActionBuilderPlugin", from: "1.0.2"),
+        /* other dependencies here... */ 
+    ],
+```
+
+Invoke the tool from the command line:
+
+`swift package plugin --allow-writing-to-package-directory --verbose generate-workflow`
+
+
+
