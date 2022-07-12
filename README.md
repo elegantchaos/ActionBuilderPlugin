@@ -23,4 +23,12 @@ Invoke the tool from the command line:
 `swift package plugin --allow-writing-to-package-directory generate-workflow`
 
 
+## Configuration
 
+By default, the plugin attempts to guess exactly what the workflow should do, based on the contents of the `Package.swift` file.
+
+If you want more control though, you can add a `.actionbuilder.json` file at the root of the package. This lets you specify a number of options when generating the workflow file.
+
+See [ActionBuilderCore](https://github.com/elegantchaos/ActionBuilderCore#configuration) for full details. 
+
+If you pass the `--create-config` flag to the plugin itself, it will make a new empty config file for you.

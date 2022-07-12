@@ -38,7 +38,9 @@ import PackagePlugin
         }
         
         // run the ActionBuilder command line tool
-        let output = try run(tool: "ActionBuilderTool", arguments: [packageDirectoryURL.path], context: context, cwd: packageDirectoryURL)
+        var toolArguments = [packageDirectoryURL.path]
+        toolArguments.append(contentsOf: arguments)
+        let output = try run(tool: "ActionBuilderTool", arguments: toolArguments, context: context, cwd: packageDirectoryURL)
         Diagnostics.remark(output)
     }
 }
