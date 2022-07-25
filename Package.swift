@@ -23,7 +23,7 @@ let package = Package(
     ],
     
     dependencies: [
-        .package(url: "https://github.com/elegantchaos/ActionBuilderCore.git", from: "1.0.9")
+        .package(url: "https://github.com/elegantchaos/ActionBuilderCore.git", from: "1.1.0")
     ],
     
     targets: [
@@ -37,7 +37,7 @@ let package = Package(
                 ),
                 
                 permissions: [
-                    .writeToPackageDirectory(reason: "Writes Workflow.yml file.")
+                    .writeToPackageDirectory(reason: "Generates/updates Workflow.yml and README.md.")
                 ]
             ),
             

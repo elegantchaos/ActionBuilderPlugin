@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/elegantchaos/ActionBuilderCore",
       "state" : {
-        "revision" : "28d012a8cbb174309e2a7ae59311d356b219757f",
-        "version" : "1.0.6"
+        "revision" : "11769b13bf7a97313ee4f6eea35345c29e259c80",
+        "version" : "1.1.0"
       }
     },
     {
