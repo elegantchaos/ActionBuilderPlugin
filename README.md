@@ -28,7 +28,7 @@ Add this repo to your package dependencies:
 
 ```Swift
     dependencies: [
-        .package(url: "https://github.com/elegantchaos/ActionBuilderPlugin", from: "1.0.2"),
+        .package(url: "https://github.com/elegantchaos/ActionBuilderPlugin.git", from: "1.0.2"),
         /* other dependencies here... */ 
     ],
 ```
