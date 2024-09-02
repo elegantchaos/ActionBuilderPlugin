@@ -5,17 +5,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/elegantchaos/ActionBuilderCore",
       "state" : {
-        "revision" : "0e35725ef86291e97da063f264f03e77aa700b83",
-        "version" : "1.1.1"
+        "revision" : "dd50ffd847ed3dc23fbeb9f3df17cc0aaa4e4c7d",
+        "version" : "2.0.0"
       }
     },
     {
-      "identity" : "matchable",
+      "identity" : "chaosbytestreams",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/elegantchaos/Matchable.git",
+      "location" : "https://github.com/elegantchaos/ChaosByteStreams.git",
       "state" : {
-        "revision" : "d53e807009960aafbd54f6229c2542f906628b38",
-        "version" : "1.0.7"
+        "revision" : "bb2be531b8b3d1410ba6b40a860b6bf8060e8fa3",
+        "version" : "1.0.0"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/elegantchaos/Runner.git",
       "state" : {
-        "revision" : "65420eb4e534a58c8fb1bf18e344bc86edb42c65",
-        "version" : "1.3.2"
+        "revision" : "4695591be15ed365323fb0b130bd21545f0aa91e",
+        "version" : "2.0.6"
       }
     },
     {
@@ -41,17 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/elegantchaos/Versionator.git",
       "state" : {
-        "revision" : "ca4498bd1121c31678770b5752da79841ed20053",
-        "version" : "1.0.2"
-      }
-    },
-    {
-      "identity" : "xctestextensions",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/elegantchaos/XCTestExtensions.git",
-      "state" : {
-        "revision" : "c1cec43d4ca0b657323080b90a840b675e8af638",
-        "version" : "1.4.9"
+        "revision" : "6d1cdddce7990f660c4f3b96c5a24be8dcce9007",
+        "version" : "2.0.2"
       }
     }
   ],
