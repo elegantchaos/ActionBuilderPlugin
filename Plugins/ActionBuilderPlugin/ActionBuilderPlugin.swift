@@ -13,7 +13,7 @@ import PackagePlugin
     Diagnostics.remark("Running \(tool) \(arguments.joined(separator: " ")).")
 
     let process = Process()
-    process.executableURL = URL(fileURLWithPath: tool.path.string)
+    process.executableURL = tool.url
     process.arguments = arguments
     process.currentDirectoryURL = cwd
 
@@ -27,7 +27,7 @@ import PackagePlugin
   }
 
   func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
-    let packageDirectoryURL = URL(fileURLWithPath: context.package.directory.string)
+    let packageDirectoryURL = context.package.directoryURL
 
     // create workflows directory if necessary
     let fm = FileManager.default
