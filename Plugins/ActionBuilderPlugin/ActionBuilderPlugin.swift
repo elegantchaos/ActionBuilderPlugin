@@ -7,10 +7,10 @@ import Foundation
 import PackagePlugin
 
 @main struct ActionBuilderPlugin: CommandPlugin {
-  func run(tool: String, arguments: [String], context: PackagePlugin.PluginContext, cwd: URL) throws -> String {
+  func run(tool: String, arguments: [String], context: PackagePlugin.PluginContext, cwd: URL) async throws -> String {
     let tool = try context.tool(named: tool)
 
-    Diagnostics.remark("Running \(tool) \(arguments.joined(separator: " ")).")
+    Diagnostics.remark("Running \(tool.url.lastPathComponent) \(arguments.joined(separator: " "))")
 
     let process = Process()
     process.executableURL = tool.url
@@ -19,8 +19,9 @@ import PackagePlugin
 
     let outputPipe = Pipe()
     process.standardOutput = outputPipe
+    process.standardError = outputPipe
     try process.run()
-    process.waitUntilExit()
+    Diagnostics.remark("waiting")
 
     let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
     return String(decoding: data, as: UTF8.self)
@@ -40,7 +41,23 @@ import PackagePlugin
     // run the ActionBuilder command line tool
     var toolArguments = [packageDirectoryURL.path]
     toolArguments.append(contentsOf: arguments)
-    let output = try run(tool: "ActionBuilderTool", arguments: toolArguments, context: context, cwd: packageDirectoryURL)
+    let output = try await run(tool: "ActionBuilderTool", arguments: toolArguments, context: context, cwd: packageDirectoryURL)
     Diagnostics.remark(output)
+  }
+}
+
+
+extension Process {
+  func waitUntilExitAsync() async {
+    await withCheckedContinuation { continuation in
+      guard self.isRunning else {
+        continuation.resume()
+        return
+      }
+
+      self.terminationHandler = { _ in
+        continuation.resume()
+      }
+    }
   }
 }

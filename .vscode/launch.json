@@ -8,8 +8,8 @@
       "type": "swift",
       "request": "launch",
       "name": "Debug",
-      "program": "swift package bb",
-      "args": [],
+      "program": "swift",
+      "args": ["package", "generate-workflow"],
       "cwd": "${workspaceRoot}"
     }
   ]
