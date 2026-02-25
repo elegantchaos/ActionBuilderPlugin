@@ -1,4 +1,4 @@
-// swift-tools-version:6.0
+// swift-tools-version:6.2
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 //  Created by Sam Deane on 04/07/2022.
@@ -10,7 +10,7 @@ import PackageDescription
 let package = Package(
   name: "ActionBuilderPlugin",
   platforms: [
-    .macOS(.v12)
+    .macOS(.v26)
   ],
 
   products: [
@@ -23,7 +23,7 @@ let package = Package(
   ],
 
   dependencies: [
-    .package(url: "https://github.com/elegantchaos/ActionBuilderCore.git", from: "2.0.0")
+    .package(url: "https://github.com/elegantchaos/ActionBuilderCore.git", from: "2.1.2"),
   ],
 
   targets: [
