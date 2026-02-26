@@ -40,24 +40,9 @@ import PackagePlugin
 
     // run the ActionBuilder command line tool
     var toolArguments = [packageDirectoryURL.path]
+    toolArguments.append("--called-from-plugin")
     toolArguments.append(contentsOf: arguments)
     let output = try await run(tool: "ActionBuilderTool", arguments: toolArguments, context: context, cwd: packageDirectoryURL)
     Diagnostics.remark(output)
-  }
-}
-
-
-extension Process {
-  func waitUntilExitAsync() async {
-    await withCheckedContinuation { continuation in
-      guard self.isRunning else {
-        continuation.resume()
-        return
-      }
-
-      self.terminationHandler = { _ in
-        continuation.resume()
-      }
-    }
   }
 }
