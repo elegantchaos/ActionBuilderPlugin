@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 
+@Suite(.serialized)
 struct GenerateWorkflowSmokeTests {
   @Test("ActionBuilderTool generates workflow for smoke package")
   func generatesWorkflowFileDirectly() throws {
@@ -15,10 +16,13 @@ struct GenerateWorkflowSmokeTests {
   @Test("Plugin command generates workflow for smoke package")
   func generatesWorkflowFileViaPlugin() throws {
     let context = smokeTestContext()
-    try? FileManager.default.removeItem(at: context.workflowFile)
+    try prepareWorkflowFileForTest(context.workflowFile)
+    defer { try? removeFileIfExists(at: context.workflowFile) }
+
     let scratchPath = context.smokePackageDirectory
       .appendingPathComponent(".build-plugin-test-\(UUID().uuidString)")
       .path
+    defer { try? FileManager.default.removeItem(atPath: scratchPath) }
 
     let result = try run(
       executable: "/usr/bin/swift",
@@ -46,7 +50,8 @@ struct GenerateWorkflowSmokeTests {
 
   private func runToolGenerationTest(additionalArguments: [String]) throws {
     let context = smokeTestContext()
-    try? FileManager.default.removeItem(at: context.workflowFile)
+    try prepareWorkflowFileForTest(context.workflowFile)
+    defer { try? removeFileIfExists(at: context.workflowFile) }
 
     var arguments = [context.smokePackageDirectory.path]
     arguments.append(contentsOf: additionalArguments)
@@ -67,6 +72,21 @@ struct GenerateWorkflowSmokeTests {
       FileManager.default.fileExists(atPath: context.workflowFile.path),
       "Expected generated workflow file at \(context.workflowFile.path). Command output:\n\(output)"
     )
+  }
+
+  private func prepareWorkflowFileForTest(_ workflowFile: URL) throws {
+    try removeFileIfExists(at: workflowFile)
+    #expect(
+      FileManager.default.fileExists(atPath: workflowFile.path) == false,
+      "Workflow file should not exist before test run: \(workflowFile.path)"
+    )
+  }
+
+  private func removeFileIfExists(at fileURL: URL) throws {
+    guard FileManager.default.fileExists(atPath: fileURL.path) else {
+      return
+    }
+    try FileManager.default.removeItem(at: fileURL)
   }
 
   private func actionBuilderToolExecutable(in repositoryRoot: URL) throws -> URL {
