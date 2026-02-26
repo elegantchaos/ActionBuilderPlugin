@@ -1,0 +1,4 @@
+.build/
+.swiftpm/
+.github/workflows/Tests.yml
+Package.resolved

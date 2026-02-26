@@ -1,13 +1,13 @@
 {
-  "originHash" : "0621cece15ffa37d596513709e723f739826698c66fd1d984b10d88edbe8cad1",
+  "originHash" : "a3e8c7590d184e4419efdfc478b3a04ea7450678f33a6bd1026fe47ed2ef89d2",
   "pins" : [
     {
       "identity" : "actionbuildercore",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/elegantchaos/ActionBuilderCore.git",
       "state" : {
-        "revision" : "d0a8c31e05d18bd3031b2d1a672b0c8342565442",
-        "version" : "2.1.4"
+        "revision" : "0d86fdd6c90667fdaf5232232d6c7fcabddbfbfb",
+        "version" : "2.1.5"
       }
     },
     {
