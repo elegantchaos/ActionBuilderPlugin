@@ -19,17 +19,12 @@ struct GenerateWorkflowSmokeTests {
     try prepareWorkflowFileForTest(context.workflowFile)
     defer { try? removeFileIfExists(at: context.workflowFile) }
 
-    let scratchPath = context.smokePackageDirectory
-      .appendingPathComponent(".build-plugin-test-\(UUID().uuidString)")
-      .path
-    defer { try? FileManager.default.removeItem(atPath: scratchPath) }
-
     let result = try run(
       executable: "/usr/bin/swift",
       arguments: [
         "package",
-        "--scratch-path",
-        scratchPath,
+        "--disable-sandbox",
+        "plugin",
         "--allow-writing-to-package-directory",
         "generate-workflow"
       ],
