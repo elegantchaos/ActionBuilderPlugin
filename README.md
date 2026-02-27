@@ -6,7 +6,6 @@
 [platforms shield]: https://img.shields.io/badge/platforms-macOS-lightgrey.svg?style=flat "macOS"
 [tests shield]: https://github.com/elegantchaos/ActionBuilderPlugin/workflows/Tests/badge.svg
 [swift 6.2 shield]: https://img.shields.io/badge/swift-6.2-F05138.svg "Swift 6.2"
-
 [swift]: https://swift.org
 [releases]: https://github.com/elegantchaos/ActionBuilderPlugin/releases
 [actions]: https://github.com/elegantchaos/ActionBuilderPlugin/actions
@@ -28,8 +27,8 @@ Add this repo to your package dependencies:
 
 ```Swift
     dependencies: [
-        .package(url: "https://github.com/elegantchaos/ActionBuilderPlugin.git", from: "2.0.2"),
-        /* other dependencies here... */ 
+        .package(url: "https://github.com/elegantchaos/ActionBuilderPlugin.git", from: "2.1.2"),
+        /* other dependencies here... */
     ],
 ```
 
@@ -37,13 +36,12 @@ Invoke the tool from the command line:
 
 `swift package plugin --allow-writing-to-package-directory generate-workflow`
 
-
 ## Configuration
 
 By default, the plugin attempts to guess exactly what the workflow should do, based on the contents of the `Package.swift` file.
 
 If you want more control though, you can add a `.actionbuilder.json` file at the root of the package. This lets you specify a number of options when generating the workflow file.
 
-See [ActionBuilderCore](https://github.com/elegantchaos/ActionBuilderCore#configuration) for full details. 
+See [ActionBuilderCore](https://github.com/elegantchaos/ActionBuilderCore#configuration) for full details.
 
 If you pass the `--create-config` flag to the plugin itself, it will make a new empty config file for you.
