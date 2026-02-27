@@ -23,7 +23,7 @@ let package = Package(
   ],
 
   dependencies: [
-    .package(url: "https://github.com/elegantchaos/ActionBuilderCore.git", from: "2.1.5"),
+    .package(url: "https://github.com/elegantchaos/ActionBuilderCore.git", from: "2.1.6")
   ],
 
   targets: [
@@ -47,6 +47,6 @@ let package = Package(
     ),
     .testTarget(
       name: "ActionBuilderPluginTests"
-    )
+    ),
   ]
 )
