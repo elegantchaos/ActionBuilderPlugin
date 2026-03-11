@@ -23,7 +23,7 @@ let package = Package(
   ],
 
   dependencies: [
-    .package(url: "https://github.com/elegantchaos/ActionBuilderCore.git", from: "2.1.6")
+    .package(url: "https://github.com/elegantchaos/ActionBuilderCore.git", from: "2.1.7")
   ],
 
   targets: [
